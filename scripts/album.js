@@ -28,6 +28,21 @@ var albumMarconi = {
 	]
 };
 
+var albumBAP = {
+	name: 'Matrix',
+	artist: 'BAP', 
+	label: 'TS Entertainment',
+	year: '2015', 
+	albumArtUrl: 'assets/images/album_covers/03.png',
+	songs : [
+		{ name: 'Take You There', length: '3:26' },
+		{ name: 'Monologue', length: '1:30' },
+		{ name: 'Young, Wild & Free', length: '3:09' },
+		{ name: 'Be Happy', length: '3:35' },
+		{ name: 'Blind', length: '3:58' } 
+	]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
 	var template = 
 	  '<tr class="album-view-song-item">'
@@ -46,6 +61,7 @@ var setCurrentAlbum = function(album) {
 	var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
 	var albumImage = document.getElementsByClassName('album-cover-art')[0];
 	var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+	var currentAlbum = album.name;
 
 	albumTitle.firstChild.nodeValue = album.name;
 	albumArtist.firstChild.nodeValue = album.artist;
@@ -57,8 +73,26 @@ var setCurrentAlbum = function(album) {
 	for (i = 0; i < album.songs.length; i++) {
 		albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
 	}
-};
+
+	return currentAlbum;
+};	
 
 window.onload = function() {
 	setCurrentAlbum(albumPicasso);
+
+	// var albumToggle = document.getElementsByClassName('album-view-artist')[0].innerText;	
+
+	document.getElementsByClassName('album-cover-art')[0].addEventListener("click", function() { 
+		var albumToggle = document.getElementsByClassName('album-view-artist')[0].innerText; 
+		if (albumToggle === "Pablo Picasso") {
+			setCurrentAlbum(albumMarconi);
+		} 
+		else if (albumToggle === "Guglielmo Marconi") {
+			setCurrentAlbum(albumBAP);
+		}
+		else {
+			setCurrentAlbum(albumPicasso);
+		}
+	});
 };
+
